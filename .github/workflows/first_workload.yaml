@@ -1,0 +1,45 @@
+name: Devops Apply Windows Patch Maintenance
+# Setup patch maintenance windows for GCP Windows instances
+#
+# the workflow always applies to the default branch (main)
+#
+# fail-fast is used to not allow a bad specific setup affect other setups
+#
+# ┌───────────── minute (0 - 59)
+# │ ┌───────────── hour (0 - 23)
+# │ │ ┌───────────── day of the month (1 - 31)
+# │ │ │ ┌───────────── month (1 - 12 or JAN-DEC)
+# │ │ │ ┌───────────── day of the week (0 - 6 or SUN-SAT)
+# │ │ │ │
+# │ │ │ │ │
+# │ │ │ │ │
+# * * * * *
+on:
+  workflow_dispatch:
+  schedule:
+    # run every tuesday of each month at 2:30UTC (3:30 CET)
+    - cron:  '30 2 * * 2'
+
+jobs:
+  patchingtuesday:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        value:
+          - 'vmm/patchops'
+    steps:
+      - name: "Checking Tuesday"
+        id: checktuesday
+        run: |
+          day_today = (date +\%d)
+          if test $day_today -lt 7; then 
+            echo "Today is the day!"
+          else
+            echo "Today is not the first Tuesday on this month!"
+            exit 1
+          fi
+
+      - name: Checkout Code
+        run: |
+          echo "TESTEEEE!!"
