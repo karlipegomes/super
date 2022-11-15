@@ -33,7 +33,7 @@ jobs:
         id: checkingtuesday
         run: |
           day_today=$( date +\%d )
-          if test $day_today -lt 15; then 
+          if test $day_today -le 15; then 
               echo "Today is the day!"
           else
               echo "Today is not the first Tuesday on this month!"
