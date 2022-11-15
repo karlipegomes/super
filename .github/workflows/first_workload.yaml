@@ -30,16 +30,33 @@ jobs:
           - 'vmm/patchops'
     steps:
       - name: "Checking Tuesday"
-        id: checktuesday
+        id: checkingtuesday
         run: |
-          day_today = date +\%d
+          day_today=$( date +\%d )
           if test $day_today -lt 7; then 
-            echo "Today is the day!"
+              echo "Today is the day!"
           else
-            echo "Today is not the first Tuesday on this month!"
-            exit 1
+              echo "Today is not the first Tuesday on this month!"
+              exit 1
           fi
+        shell: bash
 
       - name: Checkout Code
         run: |
           echo "TESTEEEE!!"
+
+      # - name: "Which Tuesday"
+      #   id: whichtuesday
+      #   run: ./utils/checking_tuesday.sh
+
+      # - name: "Checking Tuesday"
+      #   id: checkingtuesday
+      #   if: ${{ steps.whichtuesday.outputs.value == 'failed' }}
+      #   run: |
+      #     echo "Not first Tuesday"
+      #     exit 1
+      #   shell: bash
+
+      # - name: Checkout Code
+      #   run: |
+      #     echo "TESTEEEE!!"
