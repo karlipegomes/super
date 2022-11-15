@@ -32,7 +32,7 @@ jobs:
       - name: "Checking Tuesday"
         id: checktuesday
         run: |
-          day_today = (date +\%d)
+          day_today = date +\%d
           if test $day_today -lt 7; then 
             echo "Today is the day!"
           else
